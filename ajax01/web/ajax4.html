@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发送 ajax post请求</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById("btn").onclick = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        // document.getElementById("myspan").innerHTML = xhr.responseText
+                        document.getElementById("mydiv").innerHTML = xhr.responseText
+                    } else {
+                        alert(this.status)
+                    }
+                }
+            }
+            var usercode = document.getElementById("usercode").value
+            var username = document.getElementById("username").value
+            xhr.open("POST", "/ajax01/ajaxrequest3", true)
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+            xhr.send("usercode=" + usercode + "&username=" + username)
+        }
+
+    }
+</script>
+
+
+usercode<input type="text" id="usercode"><br>
+usernamde<input type="text" id="username"><br>
+<button id="btn">发送ajax post请求</button>
+<span id="myspan"></span>
+<div id="mydiv"></div>
+</body>
+</html>
+
+</body>
+</html>

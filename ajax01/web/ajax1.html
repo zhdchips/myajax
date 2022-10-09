@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax get请求</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  window.onload = function () {
+    document.getElementById("helloBtn").onclick = function () {
+      var xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function () {
+        // console.log(this.readyState)
+          if (this.readyState === 4) {
+              if (this.status === 404) {
+                  alert("对不起，你访问的资源不存在")
+              } else if(this.status === 500) {
+                  alert("对不起，服务器内部发生了严重错误")
+              } else if(this.status === 200) {
+                  // alert("响应成功~")
+                  document.getElementById("mydiv").innerHTML = this.responseText;
+              }
+          }
+      }
+
+      xhr.open("get", "/ajax01/ajaxrequest1", true);
+      xhr.send();
+    }
+  }
+</script>
+
+<input type="button" value="hello ajax" id="helloBtn">
+
+<div id = "mydiv"></div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示学生列表</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById("btn").onclick = function () {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        var students = this.responseXML.getElementsByTagName("student");
+                        console.log(students[0].childNodes[0].nodeName)
+                        var html = ""
+                        for (var i = 0; i < students.length; i++) {
+                            var student = students[i];
+                            html += "<tr>"
+                            html += "<td>" + (i+1) + "</td>"
+                            var nameOrAge = student.childNodes
+                            for (var j = 0; j < nameOrAge.length; j++) {
+
+                                var node = nameOrAge[j];
+                                if (node.nodeName == "name") {
+                                    html += "<td>" + node.textContent + "</td>"
+                                }
+                                if (node.nodeName == "age") {
+                                    html += "<td>" + node.textContent + "</td>"
+                                }
+                            }
+                            html += "<tr>"
+                        }
+                        document.getElementById("tbody").innerHTML = html
+                    } else {
+                        alert(this.status)
+                    }
+                }
+            }
+
+            xhr.open("GET", "/ajax01/ajaxrequest6", true)
+
+            xhr.send()
+        }
+    }
+</script>
+
+<input type="button" value="显示学生列表" id="btn">
+
+<table width="50%" border="1px">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+
+</table>
+
+</body>
+</html>

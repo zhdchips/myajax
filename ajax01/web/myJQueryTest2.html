@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery测试2</title>
+</head>
+<body>
+
+<script type="text/javascript" src="/ajax01/js/jQuery-1.0.0.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $("#btn").click(function () {
+            $.ajax(
+                {
+                    // "type" : "GET",
+                    "type" : "POST",
+                    "url" : "/ajax01/jQueryTest",
+                    "data" : "username=" + $("#username").val(),
+                    "async" : true,
+                    "success" : function (jsonObj) {
+                        $("#mydiv").html(jsonObj.username)
+                    }
+                }
+            )
+        })
+    })
+
+</script>
+
+<button id="btn">测试jQuery</button><br>
+<input type="text" id="username"><br>
+<div id="mydiv"></div>
+
+
+</body>
+</html>

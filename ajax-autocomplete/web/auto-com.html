@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索联想与自动补全</title>
+    <style>
+        .userInput {
+            width: 300px;
+            height: 25px;
+            font-size: 20px;
+            padding-left: 5px;
+        }
+
+        .showDataDiv {
+            width: 310px;
+            border: 1px solid lightgray;
+            background-color: antiquewhite;
+            display: none;
+        }
+
+        .showDataDiv p {
+            padding-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+
+        .showDataDiv p:hover {
+            cursor: pointer;
+            border: 1px blue solid;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#keywords").keyup(function () {
+            if ($("#keywords").val() === "") {
+                $("#datadiv")[0].style.display = "none"
+                // document.getElementById("datadiv").style.display = "none"
+            } else {
+                $.ajax({
+                    "type": "GET",
+                    "url": "/ajax_autocomplete/autocom",
+                    "data": "keyword=" + this.value,
+                    "success": function (jsonObj) {
+                        var contentList = JSON.parse(jsonObj)
+                        var html = ""
+                        for (var i = 0; i < contentList.length; i++) {
+                            html += "<p onclick='setInput(\""+ contentList[i].content +"\")'>" + contentList[i].content + "</p>"
+                        }
+                        $("#datadiv").html(html)
+                        $("#datadiv")[0].style.display = "block"
+                        // document.getElementById("datadiv").style.display = "block"
+                    }
+                })
+            }
+        })
+    })
+
+    function setInput(content) {
+        $("#keywords").val(content)
+        $("#datadiv")[0].style.display = "none"
+    }
+
+</script>
+
+
+<input type="text" class="userInput" id="keywords">
+<div id="datadiv" class="showDataDiv">
+<!--    <p>12345</p>-->
+<!--    <p>1234</p>-->
+<!--    <p>123</p>-->
+<!--    <p>12</p>-->
+</div>
+
+<div id="testdiv"></div>
+
+</body>
+</html>

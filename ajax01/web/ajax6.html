@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示学生列表</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        document.getElementById("btn").onclick = function () {
+            var xhr = new XMLHttpRequest()
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        var stuList = JSON.parse(this.responseText)
+                        var html = ""
+                        for (var i = 0; i < stuList.length; i++) {
+                            var stu = stuList[i]
+                            html += "<tr>"
+                            html += "    <td>"+ (i+1) + "</td>"
+                            html += "    <td>"+ stu.name + "</td>"
+                            html += "    <td>"+ stu.age + "</td>"
+                            html += "    <td>"+ stu.address + "</td>"
+                            html += "</tr>"
+                        }
+                        document.getElementById("stutbody").innerHTML = html
+
+                    } else {
+                        alert(this.status)
+                    }
+                }
+            }
+
+            xhr.open("GET", "/ajax01/ajaxrequest5", true)
+
+            xhr.send()
+        }
+    }
+
+</script>
+
+<input type="button" value="显示学生列表" id="btn">
+
+<table width="50%" border="1px">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>住址</th>
+    </tr>
+    </thead>
+    <tbody id="stutbody">
+
+    </tbody>
+
+</table>
+
+</body>
+</html>
