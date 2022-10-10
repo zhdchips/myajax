@@ -45,11 +45,11 @@
                 // document.getElementById("datadiv").style.display = "none"
             } else {
                 $.ajax({
-                    "type": "GET",
-                    "url": "/ajax_autocomplete/autocom",
-                    "data": "keyword=" + this.value,
-                    "success": function (jsonObj) {
-                        var contentList = JSON.parse(jsonObj)
+                    type: "GET",
+                    url: "/ajax_autocomplete/autocom",
+                    data: "keyword=" + this.value,
+                    success: function (contentList) {
+                        // var contentList = JSON.parse(jsonObj)
                         var html = ""
                         for (var i = 0; i < contentList.length; i++) {
                             html += "<p onclick='setInput(\""+ contentList[i].content +"\")'>" + contentList[i].content + "</p>"
@@ -57,7 +57,18 @@
                         $("#datadiv").html(html)
                         $("#datadiv")[0].style.display = "block"
                         // document.getElementById("datadiv").style.display = "block"
-                    }
+                    },
+                    // success: function (jsonObj) {
+                    //     var contentList = JSON.parse(jsonObj)
+                    //     var html = ""
+                    //     for (var i = 0; i < contentList.length; i++) {
+                    //         html += "<p onclick='setInput(\""+ contentList[i].content +"\")'>" + contentList[i].content + "</p>"
+                    //     }
+                    //     $("#datadiv").html(html)
+                    //     $("#datadiv")[0].style.display = "block"
+                    //     // document.getElementById("datadiv").style.display = "block"
+                    // },
+                    dataType : "json"
                 })
             }
         })

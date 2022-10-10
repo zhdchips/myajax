@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省市联动</title>
+</head>
+<body>
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $.ajax(
+            {
+                url: "/ajax01/ShowArea",
+                "success": function (jsonObj) {
+                    var html = ""
+                    html += "<option>--请选择省份--</option>"
+                    for (var i = 0; i < jsonObj.length; i++) {
+                        html += "<option value='" + jsonObj[i].code + "'>" + jsonObj[i].name + "</option>>"
+                    }
+                    $("#province").html(html)
+                },
+                dataType : "json"
+            }
+        )
+
+        $("#province").on("change", function () {
+            $.ajax(
+                {
+                    url: "/ajax01/ShowArea",
+                    data: "pcode=" + $("#province").val(),
+                    success: function (jsonObj) {
+                        var html = ""
+                        html += "<option>--请选择城市--</option>"
+                        for (var i = 0; i < jsonObj.length; i++) {
+                            html += "<option value='" + jsonObj[i].code + "'>" + jsonObj[i].name + "</option>>"
+                        }
+                        $("#city").html(html)
+                    },
+                    dataType: "json"
+                }
+            )
+        })
+
+        // $("#province").change(function () {
+        //     $.ajax(
+        //         {
+        //             url: "/ajax01/ShowArea",
+        //             data: "pcode=" + $("#province").val(),
+        //             success: function (jsonObj) {
+        //                 var html = ""
+        //                 html += "<option>--请选择城市--</option>"
+        //                 for (var i = 0; i < jsonObj.length; i++) {
+        //                     html += "<option value='" + jsonObj[i].code + "'>" + jsonObj[i].name + "</option>>"
+        //                 }
+        //                 $("#city").html(html)
+        //             },
+        //             dataType: "json"
+        //         }
+        //     )
+        // })
+    })
+
+
+</script>
+
+<select id="province">
+    <option>--请选择省份--</option>
+</select>
+
+<select id="city">
+    <option>--请选择城市--</option>
+</select>
+</body>
+</html>
